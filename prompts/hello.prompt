@@ -1,0 +1,15 @@
+prompt HelloPrompt {
+  description: "A simple greeting prompt for HelloFlow demonstration"
+  
+  parameters {
+    name: string
+  }
+  
+  template: """
+  Hello, {{name}}! 
+  
+  I'm a Genkit Flow demonstration using prompt files for better readability and maintainability.
+  
+  How can I assist you today?
+  """
+}
