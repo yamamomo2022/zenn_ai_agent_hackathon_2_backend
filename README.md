@@ -16,5 +16,5 @@ npx ts-node src/index.ts
 # デプロイコマンド
 
 ```bash
-firebase deploy --only function
+firebase deploy --only functions
 ```
