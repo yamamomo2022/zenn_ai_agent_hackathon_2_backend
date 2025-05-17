@@ -1,22 +1,40 @@
-import { genkit } from 'genkit';
+import { z, genkit } from 'genkit';
 import { vertexAI, gemini20FlashLite } from '@genkit-ai/vertexai';
-import * as functions from 'firebase-functions';
+import { onCallGenkit } from 'firebase-functions/https'
+import { defineSecret } from 'firebase-functions/params'
+import { enableGoogleCloudTelemetry } from '@genkit-ai/google-cloud'
+import { logger } from 'genkit/logging'
 
+logger.setLogLevel(`debug`)
+
+enableGoogleCloudTelemetry()
+
+const googleAIapiKey = defineSecret(`GOOGLE_GENAI_API_KEY`)
 
 const ai = genkit({
   plugins: [vertexAI()],
   model: gemini20FlashLite,
 });
 
-async function main() {
-  // make a generation request
-  const { text } = await ai.generate('Hello, Gemini!');
-  console.log(text);
-}
+const helloGemini = ai.defineFlow(
+  {
+    name: `hello-Gemini`,
+    outputSchema: z.object({
+      text: z.string(),
+    }),
+  },
+  async () => {
+        try {
+            const { text } = await ai.generate(`Hello, Gemini!`);
+            const output = {text: text}
+            return output;
+        } catch (error) {
+            logger.error("Error in helloGemini flow", error);
+            throw new Error(`Failed to generate output: ${error}`);
+        }  }
+)
 
-export const helloGemini = functions.https.onRequest(async (req, res) => {
-  const { text } = await ai.generate('Hello, Gemini!');
-  res.send(text);
-});
+const opts = { secrets: [googleAIapiKey], region: `asia-northeast1`, cors: true }
 
-main();
+export const helloGenkit = onCallGenkit(opts, helloGemini)
+
