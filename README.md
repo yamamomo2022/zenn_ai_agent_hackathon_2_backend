@@ -18,3 +18,11 @@ npx ts-node src/index.ts
 ```bash
 firebase deploy --only functions
 ```
+
+# 通信
+
+```bash
+curl -X POST https://your-webapp \
+-H "Content-Type: application/json" \
+-d '{"data":{}}'
+```
