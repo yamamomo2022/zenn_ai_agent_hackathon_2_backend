@@ -15,20 +15,19 @@ export const helloGemini = ai.defineFlow(
     async (input, context) => {
 
         const IdToken = context?.context?.auth?.authorization;
-        console.log(`IdToken: ${IdToken}`);
 
-    if (!IdToken) {
+        if (!IdToken) {
             throw new Error("Authentication information is missing.");
         }
         try {
-            verifyIdToken(IdToken);
+            await verifyIdToken(IdToken);
         } catch {
             throw new Error("Authentication failed.");
         }
 
         const helloGeminiPrompt = ai.prompt(input.text);
         const response = await helloGeminiPrompt();
-        const output = {text: response.text }  // 認証済みのuidを出力に設定
+        const output = {text: response.text };
         return output;
     }
 )
