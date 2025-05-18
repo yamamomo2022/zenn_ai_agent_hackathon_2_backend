@@ -10,3 +10,4 @@ node_modules/
 *.local
 
 .genkit
+service-account-key.json
