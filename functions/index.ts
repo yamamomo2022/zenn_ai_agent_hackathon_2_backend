@@ -1,4 +1,4 @@
-import { onCallGenkit } from 'firebase-functions/https'
+import { onCallGenkit } from 'firebase-functions/v2/https'
 import { googleAIapiKey } from './genkit'
 import { helloGemini } from './genkit-flows/helloGeminiFlow'
 
