@@ -1,7 +1,7 @@
 ---
-name: "[Design Doc] ここに Issue タイトルを入力してください"
+name: "[Design Doc]"
 about: issueのテンプレートです。
-title: ''
+title: "[Design Doc] ここに Issue タイトルを入力してください"
 labels: ''
 assignees: ''
 
