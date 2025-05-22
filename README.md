@@ -19,6 +19,23 @@ npx ts-node src/index.ts
 firebase deploy --only functions
 ```
 
+## 自動デプロイ
+
+このリポジトリでは、GitHub Actions を使用して自動デプロイが設定されています。`main` ブランチにマージされると、Firebase Functions が自動的にデプロイされます。
+
+### 必要な GitHub Secrets
+
+自動デプロイを機能させるには、以下の GitHub Secrets を設定する必要があります：
+
+- `FIREBASE_TOKEN`: Firebase CLI の認証トークン（`firebase login:ci` コマンドで取得）
+- `GOOGLE_GENAI_API_KEY`: Google Generative AI API キー
+
+### GitHub Secrets の設定方法
+
+1. リポジトリの Settings タブに移動
+2. 左側のメニューから "Secrets and variables" > "Actions" を選択
+3. "New repository secret" ボタンをクリックして必要なシークレットを追加
+
 ## 通信
 
 ```bash
