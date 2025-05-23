@@ -1,5 +1,7 @@
 import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
 import serviceAccountJson from "./service-account-key.json";
+import { onCall, CallableRequest} from 'firebase-functions/v2/https'
 
 // Firebaseの初期化（すでに初期化済みなら再初期化しない）
 if (!admin.apps.length) {
@@ -8,6 +10,9 @@ if (!admin.apps.length) {
   });
 }
 
-export const verifyIdToken = async (idToken: string) => {
-  return admin.auth().verifyIdToken(idToken);
+export const verifyAuth = (request: CallableRequest): boolean => {
+  if (!request.auth) {
+        throw new functions.https.HttpsError('unauthenticated', 'User is not authenticated');
+      }
+  return true;
 };
