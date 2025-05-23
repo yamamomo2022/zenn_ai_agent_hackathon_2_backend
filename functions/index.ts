@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { onCall, CallableOptions, CallableRequest, CallableResponse } from 'firebase-functions/v2/https'
+import { onCall, CallableRequest} from 'firebase-functions/v2/https'
 import { googleAIapiKey } from './genkit'
 import { helloGemini } from './genkit-flows/helloGeminiFlow'
 
