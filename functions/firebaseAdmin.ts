@@ -10,9 +10,8 @@ if (!admin.apps.length) {
   });
 }
 
-export const verifyAuth = (request: CallableRequest): boolean => {
+export const verifyAuth = (request: CallableRequest): void => {
   if (!request.auth) {
         throw new functions.https.HttpsError('unauthenticated', 'User is not authenticated');
       }
-  return true;
 };
