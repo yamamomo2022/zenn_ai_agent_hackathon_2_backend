@@ -9,6 +9,6 @@ export const helloGenkit = onCall(
   opts,
   async (request: CallableRequest) => {
     verifyAuth(request);
-    return helloGemini;
+    return await helloGemini();
   }
 );
