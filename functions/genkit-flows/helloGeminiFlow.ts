@@ -14,7 +14,7 @@ export const helloGemini = ai.defineFlow(
     },
     async (input, context) => {
 
-        const IdToken = context?.context?.auth?.authorization;
+        const IdToken = context?.context?.auth?.token;
 
         if (!IdToken) {
             throw new Error("Authentication information is missing.");
