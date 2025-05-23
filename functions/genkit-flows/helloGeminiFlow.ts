@@ -1,6 +1,5 @@
 import { ai } from '../genkit';
 import { z } from 'genkit';
-import { verifyIdToken } from "../firebaseAdmin";
 
 export const helloGemini = ai.defineFlow(
     {
@@ -12,18 +11,7 @@ export const helloGemini = ai.defineFlow(
             text: z.string(),
         }),
     },
-    async (input, context) => {
-
-        const IdToken = context?.context?.auth?.token;
-
-        if (!IdToken) {
-            throw new Error("Authentication information is missing.");
-        }
-        try {
-            await verifyIdToken(IdToken);
-        } catch {
-            throw new Error("Authentication failed.");
-        }
+    async (input) => {
 
         const helloGeminiPrompt = ai.prompt(input.text);
         const response = await helloGeminiPrompt();
