@@ -13,8 +13,8 @@ export const helloGemini = ai.defineFlow(
     },
     async (input) => {
 
-        const helloGeminiPrompt = ai.prompt(input.text);
-        const response = await helloGeminiPrompt();
+        const helloGeminiPrompt = ai.prompt("helloGemini");
+        const response = await helloGeminiPrompt(input.text);
         const output = {text: response.text };
         return output;
     }
