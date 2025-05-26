@@ -7,6 +7,22 @@ gcloud config set project <projectID>
 export GOOGLE_GENAI_API_KEY=<apikey>
 ```
 
+## 機能
+
+### 画像生成 (Imagen 3)
+
+テキストプロンプトから高品質な画像を生成するAPIを提供しています。詳細は[画像生成ドキュメント](./docs/image-generation.md)を参照してください。
+
+#### 使用例
+
+```typescript
+// クライアントアプリケーションからの呼び出し例
+const result = await generateImage({
+  prompt: "桜の咲く日本庭園、池には鯉が泳いでいる、写実的なスタイル"
+});
+console.log(result.imageUrl); // 生成された画像のURL
+```
+
 ## 実行コマンド
 
 ```bash
