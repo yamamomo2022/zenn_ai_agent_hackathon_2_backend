@@ -1,0 +1,8 @@
+---
+model: vertexai/imagen-3.0
+config:
+  sampleCount: 1
+  aspectRatio: "1:1"
+  negativePrompt: "blurry, distorted, low quality, ugly, poorly rendered, bad anatomy, watermark, signature, text"
+---
+{{prompt}}
