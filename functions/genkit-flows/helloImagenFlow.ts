@@ -28,7 +28,16 @@ export const helloImagen = ai.defineFlow(
         
         const images: ImageResponse[] = [];
         
-        const customData = response.custom as any;
+        interface CustomImageData {
+            bytesBase64Encoded?: string;
+            mimeType?: string;
+            images?: Array<{
+                bytesBase64Encoded?: string;
+                mimeType?: string;
+            }>;
+        }
+        
+        const customData = response.custom as CustomImageData;
         
         if (customData) {
             if (customData.bytesBase64Encoded) {
@@ -38,7 +47,7 @@ export const helloImagen = ai.defineFlow(
                 });
             } 
             else if (Array.isArray(customData.images)) {
-                customData.images.forEach((image: any) => {
+                customData.images.forEach((image) => {
                     if (image.bytesBase64Encoded) {
                         images.push({
                             bytesBase64Encoded: image.bytesBase64Encoded,
