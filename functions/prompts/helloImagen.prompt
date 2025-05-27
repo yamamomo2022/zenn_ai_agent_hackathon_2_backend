@@ -1,0 +1,7 @@
+---
+model: vertexai/imagen-3.0-generate-002
+config:
+  sampleCount: 1
+  addWatermark: true
+---
+Generate a high-quality image based on the user's text prompt. The image should be visually appealing and accurately represent the described scene, object, or concept.
