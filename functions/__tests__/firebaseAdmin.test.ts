@@ -3,13 +3,14 @@ import { verifyAuth } from '../firebaseAdmin';
 import * as functions from 'firebase-functions';
 import { CallableRequest } from 'firebase-functions/v2/https';
 import './types';
+import * as admin from 'firebase-admin';
 
 describe('verifyAuth', () => {
   it('should pass when user is authenticated', () => {
     const mockRequest: Partial<CallableRequest> = {
       auth: {
         uid: 'test-uid',
-        token: {} as any, // Cast to any to bypass type checking
+        token: {} as admin.auth.DecodedIdToken,
       },
     };
 
@@ -35,8 +36,8 @@ describe('verifyAuth', () => {
       verifyAuth(mockRequest as CallableRequest);
     } catch (error) {
       expect(error).toBeInstanceOf(functions.https.HttpsError);
-      expect((error as any).code).toBe('unauthenticated');
-      expect((error as any).message).toBe('User is not authenticated');
+      expect((error as functions.https.HttpsError).code).toBe('unauthenticated');
+      expect((error as functions.https.HttpsError).message).toBe('User is not authenticated');
     }
   });
 });

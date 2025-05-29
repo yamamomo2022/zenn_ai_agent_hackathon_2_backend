@@ -1,5 +1,4 @@
 import './setup';
-import { helloGemini } from '../genkit-flows/helloGeminiFlow';
 import './types';
 
 const mockPrompt = jest.fn();
@@ -20,8 +19,8 @@ describe('helloGemini', () => {
     });
   });
 
-  it('should be defined as a flow with correct configuration', () => {
-    require('../genkit-flows/helloGeminiFlow');
+  it('should be defined as a flow with correct configuration', async () => {
+    await import('../genkit-flows/helloGeminiFlow');
     
     expect(mockDefineFlow).toHaveBeenCalledWith(
       expect.objectContaining({

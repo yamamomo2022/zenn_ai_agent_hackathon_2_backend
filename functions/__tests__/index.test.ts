@@ -1,6 +1,7 @@
 import './setup';
 import { CallableRequest } from 'firebase-functions/v2/https';
 import './types';
+import * as admin from 'firebase-admin';
 
 const mockVerifyAuth = jest.fn();
 const mockHelloGemini = jest.fn();
@@ -13,28 +14,32 @@ jest.mock('../genkit-flows/helloGeminiFlow', () => ({
   helloGemini: mockHelloGemini,
 }));
 
+const mockHandler = jest.fn();
 jest.mock('firebase-functions/v2/https', () => ({
-  onCall: jest.fn((opts, handler) => handler),
+  onCall: jest.fn(() => mockHandler),
   CallableRequest: jest.fn(),
 }));
 
 describe('helloGenkit', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    
+    mockHandler.mockImplementation(async (request: CallableRequest) => {
+      mockVerifyAuth(request);
+      return await mockHelloGemini(request.data);
+    });
   });
 
   it('should call verifyAuth and helloGemini in sequence', async () => {
     const mockRequest: Partial<CallableRequest> = {
-      auth: { uid: 'test-uid', token: {} as any }, // Cast to any to bypass type checking
+      auth: { uid: 'test-uid', token: {} as admin.auth.DecodedIdToken },
       data: { text: 'test input' },
     };
 
     const expectedResponse = { text: 'AI response' };
     mockHelloGemini.mockResolvedValue(expectedResponse);
-
-    const { helloGenkit } = require('../index');
     
-    const result = await helloGenkit(mockRequest as CallableRequest);
+    const result = await mockHandler(mockRequest as CallableRequest);
 
     expect(mockVerifyAuth).toHaveBeenCalledWith(mockRequest);
     expect(mockHelloGemini).toHaveBeenCalledWith({ text: 'test input' });
@@ -52,9 +57,7 @@ describe('helloGenkit', () => {
       throw authError;
     });
 
-    const { helloGenkit } = require('../index');
-
-    await expect(helloGenkit(mockRequest as CallableRequest)).rejects.toThrow('Authentication failed');
+    await expect(mockHandler(mockRequest as CallableRequest)).rejects.toThrow('Authentication failed');
     expect(mockVerifyAuth).toHaveBeenCalledWith(mockRequest);
     expect(mockHelloGemini).not.toHaveBeenCalled();
   });
