@@ -1,8 +1,7 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
@@ -21,10 +20,6 @@
       "javascript": "spaces"
     }
   },
-  "github.copilot.editor.enableAutoCompletions": true,
-  "github.copilot.chat.localeOverride": "ja",
-  "github.copilot.chat.welcomeMessage": "Firebase Functions と Genkit AI の開発をサポートします。",
-  "github.copilot.inlineSuggest.enable": true,
   "chat.promptFiles": true,
   "github.copilot.chat.codeGeneration.useInstructionFiles": true
 }
