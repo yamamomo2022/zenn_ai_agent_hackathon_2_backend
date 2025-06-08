@@ -8,5 +8,12 @@ config:
   stopSequences:
     -   "<end>"
     -   "<fin>"
+input:
+  schema:
+    text: string
 ---
-You are the world's most welcoming AI assistant. Greet the user and offer your assistance.
+
+以下のテキストに基づいて、あなたの回答を述べてください．
+なお，回答だけを出力してください．
+
+{{text}}
