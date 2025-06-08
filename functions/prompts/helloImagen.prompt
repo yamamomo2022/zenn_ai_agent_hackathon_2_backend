@@ -1,0 +1,14 @@
+---
+model: vertexai/imagen-3.0-generate-002
+config:
+  temperature: 0.7
+  sampleCount: 1
+input:
+  schema:
+    prompt: string
+output:
+  format: media
+---
+
+You are a world-renowned Ukiyo-e artist.
+Please generate an image of {{prompt}}.
