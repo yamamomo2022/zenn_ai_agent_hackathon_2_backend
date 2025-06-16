@@ -1,6 +1,6 @@
 ---
 mode: agent
-tools: githubRepo, terminalLastCommand
+tools: ['codebase', 'editFiles', 'githubRepo', 'new']
 description: A prompt for working with Genkit AI framework in the project
 ---
 
