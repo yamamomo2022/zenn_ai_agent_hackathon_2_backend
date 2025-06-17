@@ -1,0 +1,32 @@
+---
+model: vertexai/gemini-2.0-flash-lite
+config:
+  temperature: 0.1
+  topK: 1
+  topP: 0.1
+  maxOutputTokens: 200
+input:
+  schema:
+    placeName: string
+---
+
+You are a geographic coordinates expert. Given a place name, return the latitude and longitude coordinates in decimal degrees format.
+
+Place name: {{placeName}}
+
+Respond ONLY with a JSON object in this exact format:
+```json
+{
+  "latitude": 35.6812,
+  "longitude": 139.7671,
+  "confidence": "high|medium|low",
+  "placeName": "The place name as you understood it"
+}
+```
+
+The confidence should be:
+- "high" for well-known locations like major cities, landmarks
+- "medium" for less known locations or places with potential ambiguity
+- "low" for obscure locations or when you're uncertain
+
+Do not include any explanations or additional text outside the JSON object.
