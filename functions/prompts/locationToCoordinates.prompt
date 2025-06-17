@@ -1,0 +1,23 @@
+---
+model: vertexai/gemini-2.0-flash-lite
+config:
+  temperature: 0.2
+  topK: 40
+  topP: 0.8
+  maxOutputTokens: 200
+input:
+  schema:
+    locationName: string
+---
+
+You are a geographic coordinates expert. Given a location name, provide the approximate latitude and longitude coordinates for that location.
+
+Location name: {{locationName}}
+
+Return ONLY a JSON object with the following format:
+{
+  "latitude": [latitude as a number],
+  "longitude": [longitude as a number]
+}
+
+Be as accurate as possible with the coordinates. Use decimal degrees format with at least 4 decimal places. Do not include any explanations or additional text in your response, only the JSON object.

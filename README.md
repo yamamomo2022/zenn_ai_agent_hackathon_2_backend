@@ -43,3 +43,36 @@ curl -X POST https://your-webapp \
 -H "Content-Type: application/json" \
 -d '{"data":{}}'
 ```
+
+## 機能一覧
+
+### 地域名称から座標（緯度・経度）を取得
+
+地域名称（地名）を入力として、生成AIを利用して緯度・経度を取得します。
+
+#### リクエスト例
+
+```bash
+curl -X POST https://your-webapp/GetLocationCoordinates \
+-H "Content-Type: application/json" \
+-d '{"data":{"locationName":"東京タワー"}}'
+```
+
+#### レスポンス例
+
+```json
+{
+  "locationName": "東京タワー",
+  "latitude": 35.6586,
+  "longitude": 139.7454
+}
+```
+
+#### テスト実行
+
+テストスクリプトを実行して機能を確認できます：
+
+```bash
+cd functions
+npx ts-node tests/locationToCoordinatesTest.ts
+```
