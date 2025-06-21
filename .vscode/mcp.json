@@ -3,6 +3,10 @@
         "github-remote": {
             "type": "http",
             "url": "https://api.githubcopilot.com/mcp/"
+        },
+        "notion-remote": {
+            "type": "http",
+            "url": "https://mcp.notion.com/mcp "
         }
     }
 }
