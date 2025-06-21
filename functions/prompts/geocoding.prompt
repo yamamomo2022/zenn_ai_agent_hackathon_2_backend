@@ -1,0 +1,19 @@
+---
+model: vertexai/gemini-2.0-flash-lite
+config:
+  temperature: 0.2
+  topK: 40
+  topP: 0.8
+input:
+  schema:
+    locationName: string
+output:
+  schema:
+    latitude: number
+    longitude: number
+---
+
+あなたは地理情報に詳しいAIアシスタントです。
+入力された地名や建物名称から、その場所の緯度・経度座標を推定してください。
+
+場所名: {{locationName}}
