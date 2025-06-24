@@ -5,6 +5,8 @@ zenn_ai_agent_hackathon_2のバックエンドです。
 gcloud auth login
 gcloud config set project <projectID>
 export GOOGLE_GENAI_API_KEY=<apikey>
+export GOOGLE_MAPS_API_KEY=<your_maps_api_key>
+firebase functions:secrets:set GOOGLE_MAPS_API_KEY
 ```
 
 ## 実行コマンド
