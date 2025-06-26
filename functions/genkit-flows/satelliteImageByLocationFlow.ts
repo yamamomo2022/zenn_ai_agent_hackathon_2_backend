@@ -24,7 +24,7 @@ export const satelliteImageByLocation = ai.defineFlow(
         try {
             // Step 1: Get coordinates from location name using geocoding flow
             const coordinates = await geocoding({ locationName: input.locationName });
-            
+
             // Step 2: Get satellite image using the coordinates
             const satelliteResult = await satelliteImage({
                 latitude: coordinates.latitude,
@@ -32,7 +32,7 @@ export const satelliteImageByLocation = ai.defineFlow(
                 zoom: input.zoom,
                 size: input.size,
             });
-            
+
             // Step 3: Return combined result
             return {
                 imageBase64: satelliteResult.imageBase64,

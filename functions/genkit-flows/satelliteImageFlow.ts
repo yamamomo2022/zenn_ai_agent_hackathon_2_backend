@@ -1,4 +1,4 @@
-import { ai } from '../genkit';
+import { ai, googleMapsApiKey } from '../genkit';
 import { z } from 'genkit';
 
 export const satelliteImage = ai.defineFlow(
@@ -21,9 +21,6 @@ export const satelliteImage = ai.defineFlow(
     async (input) => {
         const { latitude, longitude, zoom, size } = input;
 
-        // Google Maps Static API URL construction
-        const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
-
         if (!googleMapsApiKey) {
             throw new Error('Google Maps API key not configured');
         }
@@ -35,7 +32,7 @@ export const satelliteImage = ai.defineFlow(
             size: size,
             maptype: 'satellite',
             format: 'png',
-            key: googleMapsApiKey,
+            key: googleMapsApiKey.value(),
         });
 
         const imageUrl = `${baseUrl}?${params.toString()}`;
