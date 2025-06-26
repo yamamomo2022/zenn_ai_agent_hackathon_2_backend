@@ -1,6 +1,5 @@
 import { ai } from '../genkit';
 import { z } from 'genkit';
-import { defineSecret } from 'firebase-functions/params'
 
 export const satelliteImage = ai.defineFlow(
     {
@@ -12,7 +11,7 @@ export const satelliteImage = ai.defineFlow(
             size: z.string().default("600x400"),
         }),
         outputSchema: z.object({
-            imageUrl: z.string(),
+            imageBase64: z.string(),
             coordinates: z.object({
                 latitude: z.number(),
                 longitude: z.number(),
@@ -23,7 +22,7 @@ export const satelliteImage = ai.defineFlow(
         const { latitude, longitude, zoom, size } = input;
 
         // Google Maps Static API URL construction
-        const googleMapsApiKey = defineSecret("GOOGLE_MAPS_API_KEY");
+        const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
 
         if (!googleMapsApiKey) {
             throw new Error('Google Maps API key not configured');
@@ -36,13 +35,22 @@ export const satelliteImage = ai.defineFlow(
             size: size,
             maptype: 'satellite',
             format: 'png',
-            key: googleMapsApiKey.value(),
+            key: googleMapsApiKey,
         });
 
         const imageUrl = `${baseUrl}?${params.toString()}`;
 
+        // Fetch the image and convert to base64
+        const response = await fetch(imageUrl);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch satellite image: ${response.status} ${response.statusText}`);
+        }
+
+        const imageBuffer = await response.arrayBuffer();
+        const imageBase64 = Buffer.from(imageBuffer).toString('base64');
+
         return {
-            imageUrl,
+            imageBase64,
             coordinates: {
                 latitude,
                 longitude,

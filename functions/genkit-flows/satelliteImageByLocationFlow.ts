@@ -12,7 +12,7 @@ export const satelliteImageByLocation = ai.defineFlow(
             size: z.string().default("600x400"),
         }),
         outputSchema: z.object({
-            imageUrl: z.string(),
+            imageBase64: z.string(),
             coordinates: z.object({
                 latitude: z.number(),
                 longitude: z.number(),
@@ -35,7 +35,7 @@ export const satelliteImageByLocation = ai.defineFlow(
             
             // Step 3: Return combined result
             return {
-                imageUrl: satelliteResult.imageUrl,
+                imageBase64: satelliteResult.imageBase64,
                 coordinates: satelliteResult.coordinates,
                 locationName: input.locationName,
             };
