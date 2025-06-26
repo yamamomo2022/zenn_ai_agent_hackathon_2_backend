@@ -1,5 +1,6 @@
 import { ai } from '../genkit';
 import { z } from 'genkit';
+import { defineSecret } from 'firebase-functions/params'
 
 export const satelliteImage = ai.defineFlow(
     {
@@ -22,7 +23,7 @@ export const satelliteImage = ai.defineFlow(
         const { latitude, longitude, zoom, size } = input;
 
         // Google Maps Static API URL construction
-        const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY || null;
+        const googleMapsApiKey = defineSecret("GOOGLE_MAPS_API_KEY");
 
         if (!googleMapsApiKey) {
             throw new Error('Google Maps API key not configured');
@@ -35,7 +36,7 @@ export const satelliteImage = ai.defineFlow(
             size: size,
             maptype: 'satellite',
             format: 'png',
-            key: googleMapsApiKey,
+            key: googleMapsApiKey.value(),
         });
 
         const imageUrl = `${baseUrl}?${params.toString()}`;
