@@ -12,6 +12,7 @@ logger.setLogLevel(`debug`)
 enableGoogleCloudTelemetry()
 
 export const googleAIapiKey = defineSecret(`GOOGLE_GENAI_API_KEY`)
+export const googleMapsApiKey = defineSecret(`GOOGLE_MAPS_API_KEY`)
 
 export const ai = genkit({
   plugins: [vertexAI()],
