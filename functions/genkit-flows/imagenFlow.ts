@@ -16,23 +16,30 @@ export const helloImagen = ai.defineFlow(
         const helloImagenPrompt = ai.prompt("helloImagen");
         const response = await helloImagenPrompt(input);
 
-        // レスポンスからメディアデータを取得
-        if (response.media) {
-            const mediaItem = response.media;
+        const imageUrl = response.media?.url;
 
-            if (mediaItem.url) {
-                // URLから画像データを取得してbase64に変換
-                const imageResponse = await fetch(mediaItem.url);
-                const arrayBuffer = await imageResponse.arrayBuffer();
-                const base64 = Buffer.from(arrayBuffer).toString('base64');
-
-                return {
-                    base64Image: base64,
-                    mimeType: mediaItem.contentType || 'image/png'
-                };
-            }
+        if (!imageUrl) {
+            throw new Error('画像の生成に失敗しました。レスポンスに画像URLが含まれていません。');
         }
 
-        throw new Error('画像の生成に失敗しました');
+        try {
+            // URLから画像データを取得してbase64に変換
+            const imageResponse = await fetch(imageUrl);
+            if (!imageResponse.ok) {
+                throw new Error(`画像の取得に失敗しました。ステータス: ${imageResponse.status}`);
+            }
+            const arrayBuffer = await imageResponse.arrayBuffer();
+            const base64 = Buffer.from(arrayBuffer).toString('base64');
+
+            return {
+                base64Image: base64,
+                mimeType: response.media.contentType || 'image/png'
+            };
+        } catch (error) {
+            // Consider logging the original error for debugging purposes.
+            // logger.error('Image processing failed', error);
+            console.error('Image processing failed:', error);
+            throw new Error('画像の取得または処理中に予期せぬエラーが発生しました。');
+        }
     }
 )
