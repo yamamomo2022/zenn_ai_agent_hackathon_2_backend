@@ -38,6 +38,7 @@ export const helloImagen = ai.defineFlow(
         } catch (error) {
             // Consider logging the original error for debugging purposes.
             // logger.error('Image processing failed', error);
+            console.error('Image processing failed:', error);
             throw new Error('画像の取得または処理中に予期せぬエラーが発生しました。');
         }
     }
