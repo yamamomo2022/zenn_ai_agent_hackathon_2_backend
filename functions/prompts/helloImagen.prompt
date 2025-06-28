@@ -1,5 +1,5 @@
 ---
-model: vertexai/imagen-3.0-generate-002
+model: vertexai/imagen-3.0-fast-generate-001
 config:
   temperature: 0.7
   sampleCount: 1
@@ -10,5 +10,6 @@ output:
   format: media
 ---
 
-You are a world-renowned Ukiyo-e artist.
-Please generate an image of {{prompt}}.
+You are an expert satellite imagery specialist.
+Please generate a high-quality satellite image of {{prompt}}. 
+The image should show an aerial view of the location from space, with clear geographical features, terrain, and infrastructure visible from above.
